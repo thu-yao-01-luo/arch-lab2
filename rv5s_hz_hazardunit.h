@@ -95,7 +95,20 @@ private:
 
     //----------------------------added instr-------------------------------
 
+        const bool exWrite = ex_do_reg_write.uValue();
+        const bool memWrite = mem_do_reg_write.uValue();
+        const bool wbWrite = wb_do_reg_write.uValue();
 
+        return (
+            ( exWrite && (ex_reg_wr_idx == id_reg1_idx || ex_reg_wr_idx == id_reg2_idx) )
+            // ex stage will write to the required register
+            ||
+            ( memWrite && (mem_reg_wr_idx == id_reg1_idx || mem_reg_wr_idx == id_reg2_idx) ) 
+            // mem stage will write to the required register
+            ||
+            ( wbWrite && (wb_reg_wr_idx == id_reg1_idx || wb_reg_wr_idx == id_reg2_idx) )
+            // mem stage will write to the required register
+        )
 
 
 
